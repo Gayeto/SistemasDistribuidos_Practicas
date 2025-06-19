@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  servidor:
+    build: ./servidor
+    container_name: boletos-servidor
+    ports:
+      - "6000:6000"
+    networks:
+      - redboletos
+
+  cliente1:
+    build: ./cliente_terminal
+    container_name: boletos-cliente1
+    depends_on:
+      - servidor
+    networks:
+      - redboletos
+    stdin_open: true
+    tty: true
+
+  cliente2:
+    build: ./cliente_terminal
+    container_name: boletos-cliente2
+    depends_on:
+      - servidor
+    networks:
+      - redboletos
+    stdin_open: true
+    tty: true
+
+networks:
+  redboletos:
