@@ -1,0 +1,22 @@
+version: '3'
+services:
+  servidor:
+    build: ./servidor
+    container_name: chat-servidor
+    ports:
+      - "5000:5000"
+    networks:
+      - chatnet
+
+  cliente:
+    build: ./cliente
+    container_name: chat-cliente
+    depends_on:
+      - servidor
+    networks:
+      - chatnet
+    stdin_open: true
+    tty: true
+
+networks:
+  chatnet:
