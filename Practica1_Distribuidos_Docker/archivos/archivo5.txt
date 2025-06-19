@@ -1,0 +1,3 @@
+Los hilos en Java son fundamentales para aplicaciones concurrentes.
+Mejoran el rendimiento y la capacidad de respuesta.
+La palabra "Java" es clave en este texto.

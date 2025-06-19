@@ -1,0 +1,3 @@
+El internet de las cosas (IoT) conecta dispositivos inteligentes.
+Es una tendencia en crecimiento en la tecnología.
+Este archivo no menciona Java.

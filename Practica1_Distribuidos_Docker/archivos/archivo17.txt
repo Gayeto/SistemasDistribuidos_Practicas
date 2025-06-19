@@ -1,0 +1,3 @@
+Los hilos en Java son esenciales para aplicaciones multiusuario.
+Mejoran la experiencia del usuario final.
+La palabra "Java" es importante en este contexto.

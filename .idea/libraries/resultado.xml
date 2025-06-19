@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="resultado">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Practica1_Distribuidos_Docker/archivos/resultado.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

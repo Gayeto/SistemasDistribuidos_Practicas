@@ -1,0 +1,3 @@
+Java es utilizado en millones de dispositivos en todo el mundo.
+Su portabilidad y seguridad lo hacen muy popular.
+La palabra "Java" aparece varias veces aquí.

@@ -1,0 +1,3 @@
+Java es utilizado en aplicaciones empresariales a gran escala.
+Frameworks como Spring y Hibernate son muy populares.
+La palabra "Java" aparece varias veces aquí.

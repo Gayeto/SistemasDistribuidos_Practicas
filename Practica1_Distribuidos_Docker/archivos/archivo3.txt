@@ -1,0 +1,3 @@
+Java es un lenguaje de programación muy versátil.
+Se utiliza en desarrollo web, móvil y empresarial.
+La concurrencia es una de sus características más importantes.

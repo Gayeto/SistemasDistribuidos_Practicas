@@ -1,0 +1,3 @@
+Los hilos en Java permiten ejecutar múltiples tareas simultáneamente.
+Esto mejora la eficiencia de las aplicaciones.
+La palabra "Java" aparece varias veces aquí.

@@ -1,0 +1,3 @@
+La computación en la nube permite acceder a recursos bajo demanda.
+Servicios como AWS y Azure lideran el mercado.
+Este archivo no contiene la palabra "Java".

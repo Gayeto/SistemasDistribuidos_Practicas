@@ -1,0 +1,3 @@
+El análisis de datos es fundamental para la toma de decisiones.
+Herramientas como Pandas y NumPy son muy utilizadas.
+Este archivo no menciona Java.

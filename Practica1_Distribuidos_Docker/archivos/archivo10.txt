@@ -1,0 +1,3 @@
+El desarrollo de software ágil es una metodología popular.
+Se enfoca en la entrega incremental y la colaboración.
+Este archivo no menciona Java.

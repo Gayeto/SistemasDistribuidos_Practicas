@@ -1,0 +1,3 @@
+Java es un lenguaje de programación orientado a objetos.
+Fue desarrollado por Sun Microsystems en los años 90.
+La palabra "Java" aparece varias veces aquí.

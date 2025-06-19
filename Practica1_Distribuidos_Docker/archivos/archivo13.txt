@@ -1,0 +1,3 @@
+Los hilos en Java son útiles para aplicaciones de alto rendimiento.
+Permiten ejecutar tareas en paralelo.
+La palabra "Java" es clave en este texto.

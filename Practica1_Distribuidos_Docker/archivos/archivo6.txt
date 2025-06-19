@@ -1,0 +1,3 @@
+El aprendizaje automático es una rama de la inteligencia artificial.
+Se basa en algoritmos que aprenden de los datos.
+Este archivo no menciona Java.

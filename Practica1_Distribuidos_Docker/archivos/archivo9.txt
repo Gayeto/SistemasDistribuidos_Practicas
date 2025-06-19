@@ -1,0 +1,3 @@
+Los hilos en Java permiten manejar tareas en segundo plano.
+Esto es útil en aplicaciones con interfaces gráficas.
+La palabra "Java" es importante en este contexto.
