@@ -1,7 +1,7 @@
 version: '3'
 services:
   servidor:
-    build: ./servidor
+    build: ./Servidor
     container_name: chat-servidor
     ports:
       - "5000:5000"
@@ -9,7 +9,7 @@ services:
       - chatnet
 
   cliente:
-    build: ./cliente
+    build: ./Cliente
     container_name: chat-cliente
     depends_on:
       - servidor
