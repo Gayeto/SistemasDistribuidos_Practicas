@@ -1,0 +1,33 @@
+{
+  "name": "Practica8 Docker PWA",
+  "image": "mcr.microsoft.com/devcontainers/universal:latest",
+
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "version": "latest"
+    }
+  },
+
+  "forwardPorts": [3000],
+
+  "portsAttributes": {
+    "3000": {
+      "label": "PWA Task Manager",
+      "onAutoForward": "notify",
+      "protocol": "http",
+      "publishApplication": true,
+      "visibility": "public"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-azuretools.vscode-docker",
+        "formulahendry.auto-rename-tag",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss"
+      ]
+    }
+  },
+  "postCreateCommand": "docker build -t pwa-task-manager . && docker run -p 3000:80 --name pwa-app -d pwa-task-manager"
+}

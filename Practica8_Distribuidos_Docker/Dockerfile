@@ -1,40 +1,35 @@
 # Multi-stage build
+
 # Primera etapa: build de la aplicación React
 FROM node:18-alpine AS build
 
 WORKDIR /app
 
-# Copia los archivos de definición de proyecto (package.json, etc.)
 COPY package.json ./
 COPY package-lock.json ./
-
-# Instala las dependencias de Node.js (npm install)
 RUN npm install
 
-# Copia el resto del código fuente de la aplicación
 COPY public ./public
 COPY src ./src
 COPY tailwind.config.js ./
 COPY postcss.config.js ./
 
-# Compila la aplicación para producción
-# Esto creará la carpeta 'build' con los archivos estáticos optimizados
 RUN npm run build
 
-# Segunda etapa: servir la aplicación
-FROM node:18-alpine
-
-WORKDIR /app
-
-# Instala el paquete 'serve' globalmente para servir los archivos estáticos
-RUN npm install -g serve
+# Segunda etapa: servir la aplicación con Nginx
+FROM nginx:stable-alpine
 
 # Copia los archivos estáticos generados desde la etapa de 'build'
-COPY --from=build /app/build ./build
+COPY --from=build /app/build /usr/share/nginx/html
 
-# Expone el puerto en el que el servidor 'serve' escuchará
-EXPOSE 3000
+# Elimina el archivo de configuración por defecto de Nginx
+RUN rm /etc/nginx/conf.d/default.conf
 
-# Comando para ejecutar el servidor 'serve' y servir la aplicación
-# El modo -s asegura que sirve archivos estáticos y -l es para el puerto
-CMD ["serve", "-s", "build", "-l", "3000"]
+# Copia una configuración personalizada de Nginx
+COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
+
+# Expone el puerto 80, que es el puerto por defecto de Nginx
+EXPOSE 80
+
+# Comando para iniciar Nginx (es el CMD por defecto de la imagen nginx:stable-alpine)
+CMD ["nginx", "-g", "daemon off;"]
