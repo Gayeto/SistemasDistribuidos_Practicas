@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8"> <!-- ¡Añadido para solucionar la advertencia de codificación! -->
     <title>Chat WebSocket</title>
     <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <script src="/webjars/jquery/jquery.min.js"></script>
@@ -19,7 +20,7 @@
         <div class="col-md-6">
             <form class="form-inline">
                 <div class="form-group">
-                    <label for="connect">Conexion WebSocket:</label>
+                    <label for="connect">Conexión WebSocket:</label>
                     <button id="connect" class="btn btn-primary">Conectar</button>
                     <button id="disconnect" class="btn btn-danger" disabled="disabled">Desconectar</button>
                 </div>
@@ -63,8 +64,29 @@
     }
 
     function connect() {
-        // Conectarse al endpoint WebSocket, usando el host dinámico para Codespaces
-        var socket = new SockJS('http://' + window.location.hostname + ':8080/ws');
+        // --- INICIO DE LA SECCIÓN CORREGIDA ---
+        var socket;
+        var protocol = window.location.protocol === 'https:' ? 'https:' : 'http:';
+        var host = window.location.hostname;
+        var port = ':8080'; // Tu servidor Spring Boot está en 8080
+
+        // En Codespaces, el puerto ya está en el subdominio (ej: mi-app-8080.github.dev),
+        // por lo que no debemos añadir ':8080' al host si ya está ahí.
+        // Sin embargo, SockJS es inteligente y con '/ws' debería usar el mismo host y puerto.
+        // Pero para asegurar la conexión segura (HTTPS -> WSS),
+        // construimos la URL explícitamente.
+
+        // NOTA IMPORTANTE: En Codespaces, la URL generada ya incluye el puerto en el subdominio.
+        // Por ejemplo: https://nombre-aleatorio-8080.app.github.dev/
+        // Esto significa que window.location.hostname ya es "nombre-aleatorio-8080.app.github.dev"
+        // y NO debes añadir ':8080' nuevamente.
+
+        // Por lo tanto, la forma más sencilla y correcta en Codespaces es:
+        var wsUrl = protocol + '//' + host + '/ws';
+        socket = new SockJS(wsUrl);
+
+        // --- FIN DE LA SECCIÓN CORREGIDA ---
+
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function (frame) {
             setConnected(true);
@@ -73,6 +95,9 @@
             stompClient.subscribe('/topic/messages', function (message) {
                 showMessage(JSON.parse(message.body));
             });
+        }, function(error) { // Añadir callback de error para depuración
+            console.error("STOMP error:", error);
+            setConnected(false);
         });
     }
 
@@ -85,11 +110,15 @@
     }
 
     function sendMessage() {
-        stompClient.send("/app/chat", {}, JSON.stringify({
-            'from': $("#from").val(),
-            'text': $("#text").val()
-        }));
-        $("#text").val(""); // Limpiar el campo de texto después de enviar
+        if (stompClient && stompClient.connected) { // Verificar si está conectado antes de enviar
+            stompClient.send("/app/chat", {}, JSON.stringify({
+                'from': $("#from").val(),
+                'text': $("#text").val()
+            }));
+            $("#text").val(""); // Limpiar el campo de texto después de enviar
+        } else {
+            console.warn("No conectado al servidor. Por favor, haz clic en 'Conectar'.");
+        }
     }
 
     function showMessage(message) {
