@@ -1,0 +1,43 @@
+version: '3.8'
+services:
+  servidor1:
+    build:
+      context: ./servidor
+    container_name: servidor1
+    ports:
+      - "6001:6001"
+    command: ["python", "servidor.py", "6001"]
+    networks:
+      redlamport:
+        ipv4_address: 172.28.0.2
+
+  servidor2:
+    build:
+      context: ./servidor
+    container_name: servidor2
+    ports:
+      - "6002:6002"
+    command: ["python", "servidor.py", "6002"]
+    networks:
+      redlamport:
+        ipv4_address: 172.28.0.3
+
+  cliente:
+    build:
+      context: ./cliente
+    container_name: cliente
+    stdin_open: true
+    tty: true
+    networks:
+      redlamport:
+        ipv4_address: 172.28.0.4
+    depends_on:
+      - servidor1
+      - servidor2
+
+networks:
+  redlamport:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
