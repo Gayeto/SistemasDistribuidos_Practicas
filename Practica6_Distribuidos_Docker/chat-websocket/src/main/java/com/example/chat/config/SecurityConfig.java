@@ -1,3 +1,5 @@
+package com.example.chat.config; // Asegúrate de que el paquete sea correcto
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,11 +11,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests()
-                .requestMatchers("/", "/ws-chat/**", "/topic/**", "/app/**").permitAll()  // Permite acceso sin autenticación
-                .anyRequest().denyAll()  // Bloquea todo lo demás
-                .and()
-                .csrf().disable();  // Desactiva CSRF (necesario para WebSockets)
+                // Permite TODAS las solicitudes a CUALQUIER PATH.
+                // ¡Esto es SOLO para depuración y NO seguro para producción!
+                .authorizeHttpRequests(authorize -> authorize
+                    .anyRequest().permitAll() // Permitir todo
+                )
+                .csrf(csrf -> csrf.disable()); // Desactivar CSRF, aún necesario para WebSocket
 
         return http.build();
     }
