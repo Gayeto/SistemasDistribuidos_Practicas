@@ -1,0 +1,22 @@
+# Usa una imagen base de Java Development Kit (JDK)
+FROM openjdk:17-jdk-slim
+
+# Establece el directorio de trabajo dentro del contenedor
+WORKDIR /app
+
+# Copia los archivos necesarios desde la carpeta 'servidor' en el contexto de construcción
+COPY servidor/AjedrezInterfaz.java .
+COPY servidor/AjedrezServidorImpl.java .
+COPY servidor/ServidorMain.java .
+
+# Compila todos los archivos Java copiados
+RUN javac *.java
+
+# Crea un archivo JAR ejecutable que el contenedor ejecutará
+RUN jar cfe servidor.jar ServidorMain *.class
+
+# Expone el puerto que el servicio RMI utilizará
+EXPOSE 2099
+
+# Comando para ejecutar el servidor RMI cuando el contenedor inicie
+CMD ["java", "-jar", "servidor.jar"]

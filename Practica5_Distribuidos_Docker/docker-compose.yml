@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  servidor:
+    build:
+      context: .
+      dockerfile: Dockerfile.servidor
+    ports:
+      - "2099:2099"
+    networks:
+      - ajedrez_network
+    restart: on-failure
+
+  cliente:
+    build:
+      context: .
+      dockerfile: Dockerfile.cliente
+    depends_on:
+      - servidor
+    networks:
+      - ajedrez_network
+
+networks:
+  ajedrez_network:
+    driver: bridge

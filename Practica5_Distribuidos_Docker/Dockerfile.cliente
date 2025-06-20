@@ -1,0 +1,8 @@
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+COPY cliente/AjedrezInterfaz.java .
+COPY cliente/Cliente.java .
+RUN javac *.java
+RUN jar cfe cliente.jar Cliente *.class
+# Eliminamos el CMD, ya que lo especificaremos al ejecutar con docker-compose run
+# CMD ["java", "-jar", "cliente.jar"]
